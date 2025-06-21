@@ -78,6 +78,6 @@ void Output::tickLowpass(float input [MAX_NUM_VOICES])
 void Output::lowpassTick(float& sample, int v, float cutoff)
 {
     float in = (cutoff* 70.0f) + 58.0f;
-    tSVF_LP_setFreqFast(&lowpass[v], in);
-    sample = tSVF_LP_tick(&lowpass[v], sample);
+    tSVF_LP_setFreqFast(lowpass[v], in);
+    sample = tSVF_LP_tick(lowpass[v], sample);
 }

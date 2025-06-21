@@ -68,19 +68,19 @@ void Oscillator::prepareToPlay (double sampleRate, int samplesPerBlock)
     AudioComponent::prepareToPlay(sampleRate, samplesPerBlock);
     for (int i = 0; i < MAX_NUM_VOICES; i++)
     {
-        tPBSaw_setSampleRate(&saw[i], sampleRate);
-        tPBPulse_setSampleRate(&pulse[i], sampleRate);
-        tCycle_setSampleRate(&sine[i], sampleRate);
-        tPBTriangle_setSampleRate(&tri[i], sampleRate);
+        tPBSaw_setSampleRate(saw[i], sampleRate);
+        tPBPulse_setSampleRate(pulse[i], sampleRate);
+        tCycle_setSampleRate(sine[i], sampleRate);
+        tPBTriangle_setSampleRate(tri[i], sampleRate);
         
-        tPBSawSquare_setSampleRate(&sawPaired[i], sampleRate);
+        tPBSawSquare_setSampleRate(sawPaired[i], sampleRate);
         
-        tPBSineTriangle_setSampleRate(&sinePaired[i], sampleRate);
+        tPBSineTriangle_setSampleRate(sinePaired[i], sampleRate);
        
         
         if (waveTableFile.exists())
         {
-            tWaveOscS_setSampleRate(&wave[i], sampleRate);
+            tWaveOscS_setSampleRate(wave[i], sampleRate);
         }
     }
 }
@@ -133,11 +133,11 @@ void Oscillator::setShape(int v, float shape)
     currentShapeSet = OscShapeSet(int(*afpShapeSet));
     switch (currentShapeSet) {
         case SawPulseOscShapeSet:
-            tPBSawSquare_setShape(&sawPaired[v], shape);
+            tPBSawSquare_setShape(sawPaired[v], shape);
             break;
             
         case SineTriOscShapeSet:
-            tPBSineTriangle_setShape(&sinePaired[v], shape);
+            tPBSineTriangle_setShape(sinePaired[v], shape);
             break;
             
         case SawOscShapeSet:
@@ -145,7 +145,7 @@ void Oscillator::setShape(int v, float shape)
             break;
             
         case PulseOscShapeSet:
-            tPBPulse_setWidth(&pulse[v], shape);
+            tPBPulse_setWidth(pulse[v], shape);
             break;
             
         case SineOscShapeSet:
@@ -153,7 +153,7 @@ void Oscillator::setShape(int v, float shape)
             break;
             
         case TriOscShapeSet:
-            tPBTriangle_setSkew(&tri[v], shape);
+            tPBTriangle_setSkew(tri[v], shape);
             break;
             
         //case UserOscShapeSet:
@@ -260,7 +260,7 @@ void Oscillator::loadAll(int v)
 
 void Oscillator::sawSquareTick(float& sample, int v, float freq, float shape)
 {
-    tPBSawSquare_setFreq(&sawPaired[v], freq);
+    tPBSawSquare_setFreq(sawPaired[v], freq);
     //if (isSync_raw == nullptr || *isSync_raw > 0)
     {
         //if(syncType_raw != nullptr)
@@ -269,13 +269,13 @@ void Oscillator::sawSquareTick(float& sample, int v, float freq, float shape)
         }
         //tMBSawPulse_sync(&sawPaired[v], syncSource->syncOut[v]);
     }
-    sample += tPBSawSquare_tick(&sawPaired[v]);
+    sample += tPBSawSquare_tick(sawPaired[v]);
 
 }
 
 void Oscillator::sineTriTick(float& sample, int v, float freq, float shape)
 {
-    tPBSineTriangle_setFreq(&sinePaired[v], freq);
+    tPBSineTriangle_setFreq(sinePaired[v], freq);
     
     //if (isSync_raw == nullptr || *isSync_raw > 0)
     {
@@ -285,13 +285,13 @@ void Oscillator::sineTriTick(float& sample, int v, float freq, float shape)
         }
         //tMBSineTri_sync(&sinePaired[v], syncSource->syncOut[v]);
     }
-    sample += tPBSineTriangle_tick(&sinePaired[v]);
+    sample += tPBSineTriangle_tick(sinePaired[v]);
 
 }
 
 void Oscillator::sawTick(float& sample, int v, float freq, float shape)
 {
-    tPBSaw_setFreq(&saw[v], freq);
+    tPBSaw_setFreq(saw[v], freq);
     //if (isSync_raw == nullptr || *isSync_raw > 0)
     {
         //if(syncType_raw != nullptr)
@@ -300,12 +300,12 @@ void Oscillator::sawTick(float& sample, int v, float freq, float shape)
         }
        // tMBSaw_sync(&saw[v], syncSource->syncOut[v]);
     }
-    sample += tPBSaw_tick(&saw[v]);
+    sample += tPBSaw_tick(saw[v]);
 }
 
 void Oscillator::pulseTick(float& sample, int v, float freq, float shape)
 {
-    tPBPulse_setFreq(&pulse[v], freq);
+    tPBPulse_setFreq(pulse[v], freq);
     
     //if (isSync_raw == nullptr || *isSync_raw > 0)
     {
@@ -315,18 +315,18 @@ void Oscillator::pulseTick(float& sample, int v, float freq, float shape)
         }
         //tPBPulse_sync(&pulse[v], syncSource->syncOut[v]);
     }
-    sample += tPBPulse_tick(&pulse[v]);
+    sample += tPBPulse_tick(pulse[v]);
 }
 
 void Oscillator::sineTick(float& sample, int v, float freq, float shape)
 {
-    tCycle_setFreq(&sine[v], freq);
-    sample += tCycle_tick(&sine[v]);
+    tCycle_setFreq(sine[v], freq);
+    sample += tCycle_tick(sine[v]);
 }
 
 void Oscillator::triTick(float& sample, int v, float freq, float shape)
 {
-    tPBTriangle_setFreq(&tri[v], freq);
+    tPBTriangle_setFreq(tri[v], freq);
     
     //if (isSync_raw == nullptr || *isSync_raw > 0)
     {
@@ -336,14 +336,14 @@ void Oscillator::triTick(float& sample, int v, float freq, float shape)
         }
         //tMBTriangle_sync(&tri[v], syncSource->syncOut[v]);
     }
-    sample += tPBTriangle_tick(&tri[v]);
+    sample += tPBTriangle_tick(tri[v]);
 }
 
 void Oscillator::userTick(float& sample, int v, float freq, float shape)
 {
-    tWaveOscS_setFreq(&wave[v], freq);
+    tWaveOscS_setFreq(wave[v], freq);
     
-    sample += tWaveOscS_tick(&wave[v]);
+    sample += tWaveOscS_tick(wave[v]);
 }
 
 void Oscillator::setWaveTables(File file)
@@ -416,13 +416,13 @@ void LowFreqOscillator::prepareToPlay (double sampleRate, int samplesPerBlock)
     AudioComponent::prepareToPlay(sampleRate, samplesPerBlock);
     for (int i = 0; i < MAX_NUM_VOICES; i++)
     {
-        tIntPhasor_setSampleRate(&saw[i], sampleRate);
-        tSquareLFO_setSampleRate(&pulse[i], sampleRate);
-        tCycle_setSampleRate(&sine[i], sampleRate);
-        tTriLFO_setSampleRate(&tri[i], sampleRate);
+        tIntPhasor_setSampleRate(saw[i], sampleRate);
+        tSquareLFO_setSampleRate(pulse[i], sampleRate);
+        tCycle_setSampleRate(sine[i], sampleRate);
+        tTriLFO_setSampleRate(tri[i], sampleRate);
         
-        tSawSquareLFO_setSampleRate(&sawSquare[i], sampleRate);
-        tSineTriLFO_setSampleRate(&sineTri[i], sampleRate);
+        tSawSquareLFO_setSampleRate(sawSquare[i], sampleRate);
+        tSineTriLFO_setSampleRate(sineTri[i], sampleRate);
     }
 }
 
@@ -468,11 +468,11 @@ void LowFreqOscillator::setShape(int v, float shape)
     currentShapeSet = LFOShapeSet(int(*afpShapeSet));
     switch (currentShapeSet) {
         case SineTriLFOShapeSet:
-            tSineTriLFO_setShape(&sineTri[v], shape);
+            tSineTriLFO_setShape(sineTri[v], shape);
             break;
             
         case SawPulseLFOShapeSet:
-            tSawSquareLFO_setShape(&sawSquare[v], shape);
+            tSawSquareLFO_setShape(sawSquare[v], shape);
             break;
             
         case SineLFOShapeSet:
@@ -488,11 +488,11 @@ void LowFreqOscillator::setShape(int v, float shape)
             break;
             
         case PulseLFOShapeSet:
-            tSquareLFO_setPulseWidth(&pulse[v], shape);
+            tSquareLFO_setPulseWidth(pulse[v], shape);
             break;
             
         default:
-            tSineTriLFO_setShape(&sineTri[v], shape);
+            tSineTriLFO_setShape(sineTri[v], shape);
             break;
     }
 }
@@ -505,32 +505,32 @@ void LowFreqOscillator::setRate(int v, float rate)
     
     switch (currentShapeSet) {
         case SineTriLFOShapeSet:
-            tSineTriLFO_setFreq(&sineTri[v], rate);
+            tSineTriLFO_setFreq(sineTri[v], rate);
             
             break;
             
         case SawPulseLFOShapeSet:
-            tSawSquareLFO_setFreq(&sawSquare[v], rate);
+            tSawSquareLFO_setFreq(sawSquare[v], rate);
             break;
             
         case SineLFOShapeSet:
-            tCycle_setFreq(&sine[v], rate);
+            tCycle_setFreq(sine[v], rate);
             break;
             
         case TriLFOShapeSet:
-            tTriLFO_setFreq(&tri[v], rate);
+            tTriLFO_setFreq(tri[v], rate);
             break;
             
         case SawLFOShapeSet:
-            tIntPhasor_setFreq(&saw[v], rate);
+            tIntPhasor_setFreq(saw[v], rate);
             break;
             
         case PulseLFOShapeSet:
-            tSquareLFO_setFreq(&pulse[v], rate);
+            tSquareLFO_setFreq(pulse[v], rate);
             break;
             
         default:
-            tSineTriLFO_setFreq(&sineTri[v], rate);
+            tSineTriLFO_setFreq(sineTri[v], rate);
             break;
     }
 }
@@ -581,45 +581,45 @@ void LowFreqOscillator::loadAll(int v)
 void LowFreqOscillator::sawSquareTick(float& sample, int v)
 {
 
-    sample += tSawSquareLFO_tick(&sawSquare[v]);
+    sample += tSawSquareLFO_tick(sawSquare[v]);
 }
 
 void LowFreqOscillator::sineTriTick(float& sample, int v)
 {
-    sample += tSineTriLFO_tick(&sineTri[v]);
+    sample += tSineTriLFO_tick(sineTri[v]);
 }
 
 void LowFreqOscillator::sineTick(float& sample, int v)
 {
-    sample += tCycle_tick(&sine[v]);
+    sample += tCycle_tick(sine[v]);
 }
 
 void LowFreqOscillator::triTick(float& sample, int v)
 {
-    sample += tTriLFO_tick(&tri[v]);
+    sample += tTriLFO_tick(tri[v]);
 }
 
 void LowFreqOscillator::sawTick(float& sample, int v)
 {
-    sample += tIntPhasor_tick(&saw[v]);
+    sample += tIntPhasor_tick(saw[v]);
 }
 
 void LowFreqOscillator::pulseTick(float& sample, int v)
 {
-    sample += tSquareLFO_tick(&pulse[v]);
+    sample += tSquareLFO_tick(pulse[v]);
 }
 
 void LowFreqOscillator::noteOn(int voice, float velocity)
 {
     if (sync->getValue() > 0)
     {
-        tIntPhasor_setPhase(&saw[voice], phaseReset);
-        tSquareLFO_setPulseWidth(&pulse[voice], phaseReset);
-        tCycle_setPhase(&sine[voice], phaseReset);
-        tTriLFO_setPhase(&tri[voice], phaseReset);
+        tIntPhasor_setPhase(saw[voice], phaseReset);
+        tSquareLFO_setPulseWidth(pulse[voice], phaseReset);
+        tCycle_setPhase(sine[voice], phaseReset);
+        tTriLFO_setPhase(tri[voice], phaseReset);
         
-        tSawSquareLFO_setPhase(&sawSquare[voice], phaseReset);
-        tSineTriLFO_setPhase(&sineTri[voice], phaseReset);
+        tSawSquareLFO_setPhase(sawSquare[voice], phaseReset);
+        tSineTriLFO_setPhase(sineTri[voice], phaseReset);
     }
 }
 
@@ -695,8 +695,8 @@ void NoiseGenerator::prepareToPlay (double sampleRate, int samplesPerBlock)
     AudioComponent::prepareToPlay(sampleRate, samplesPerBlock);
     for (int i = 0; i < MAX_NUM_VOICES; i++)
     {
-        tVZFilterBell_setSampleRate(&bell1[i], sampleRate);
-        tTiltFilter_setSampleRate(&tiltF[i], sampleRate);
+        tVZFilterBell_setSampleRate(bell1[i], sampleRate);
+        tTiltFilter_setSampleRate(tiltF[i], sampleRate);
     }
 }
 
@@ -713,8 +713,8 @@ void NoiseGenerator::loadAll(int v)
     quickParams[NoiseAmp][v]->setValueToRaw();
     quickParams[NoiseFreq][v]->setValueToRaw();
     quickParams[NoiseTilt][v]->setValueToRaw();
-    tVZFilterBell_setFrequencyAndGain(&bell1[v], faster_mtof(quickParams[NoiseFreq][v]->read() * 77.0f + 26.0f), fasterdbtoa((quickParams[NoiseGain][v]->read() * 34.0f) - 17.0f));
-    tTiltFilter_setTilt(&tiltF[v], quickParams[NoiseTilt][v]->read()*10.0f - 5.0f);
+    tVZFilterBell_setFrequencyAndGain(bell1[v], faster_mtof(quickParams[NoiseFreq][v]->read() * 77.0f + 26.0f), fasterdbtoa((quickParams[NoiseGain][v]->read() * 34.0f) - 17.0f));
+    tTiltFilter_setTilt(tiltF[v], quickParams[NoiseTilt][v]->read()*10.0f - 5.0f);
 
 }
 
@@ -729,11 +729,11 @@ void NoiseGenerator::tick(float output[][MAX_NUM_VOICES])
         float freq = quickParams[NoiseFreq][v]->read();
         float amp = quickParams[NoiseAmp][v]->read();
         amp = amp < 0.f ? 0.f : amp;
-        tVZFilterBell_setFrequencyAndGain (&bell1[v], faster_mtof(freq * 77.0f + 26.0f), fasterdbtoa((gain* 34.0f) - 17.0f));
-        tTiltFilter_setTilt(&tiltF[v], tilt*10.0f - 5.0f);
-        float sample = tNoise_tick(&noise[v]) ;
-        sample = tTiltFilter_tick(&tiltF[v], sample);
-        sample = tVZFilterBell_tick(&bell1[v], sample);
+        tVZFilterBell_setFrequencyAndGain (bell1[v], faster_mtof(freq * 77.0f + 26.0f), fasterdbtoa((gain* 34.0f) - 17.0f));
+        tTiltFilter_setTilt(tiltF[v], tilt*10.0f - 5.0f);
+        float sample = tNoise_tick(noise[v]) ;
+        sample = tTiltFilter_tick(tiltF[v], sample);
+        sample = tVZFilterBell_tick(bell1[v], sample);
         sample = sample * amp;
         float normSample = (sample + 1.f) * 0.5f;
         source[v] = normSample;

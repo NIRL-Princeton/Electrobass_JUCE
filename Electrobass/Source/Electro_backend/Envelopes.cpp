@@ -36,7 +36,7 @@ MappingSourceModel(p, n, true, false, Colours::deepskyblue)
                     expBuffer[(int)(0.9f * expBufferSizeMinusOne)] * 8192.0f,
                     expBuffer[(int)(0.1f * expBufferSizeMinusOne)] * 8192.0f,
                     decayExpBuffer, DECAY_EXP_BUFFER_SIZE, &processor.leaf);
-        tADSRT_setLeakFactor(&envs[i], ((1.0f - 0.1f) * 0.00005f) + 0.99995f);
+        tADSRT_setLeakFactor(envs[i], ((1.0f - 0.1f) * 0.00005f) + 0.99995f);
     }
 }
 
@@ -53,7 +53,7 @@ void Envelope::prepareToPlay (double sampleRate, int samplesPerBlock)
     AudioComponent::prepareToPlay(sampleRate, samplesPerBlock);
     for (int i = 0; i < MAX_NUM_VOICES; i++)
     {
-        tADSRT_setSampleRate(&envs[i], sampleRate);
+        tADSRT_setSampleRate(envs[i], sampleRate);
     }
 }
 
@@ -74,19 +74,19 @@ void Envelope::loadAll(int v)
     quickParams[EnvelopeLeak][v]->setValueToRaw();
     float attack = quickParams[EnvelopeAttack][v]->read();
     attack = attack < 0.f ? 0.f : attack;
-    tADSRT_setAttack(&envs[v], attack);
+    tADSRT_setAttack(envs[v], attack);
     float decay = quickParams[EnvelopeDecay][v]->read();
     decay = decay < 0.f ? 0.f : decay;
-    tADSRT_setDecay(&envs[v], decay);
+    tADSRT_setDecay(envs[v], decay);
     float sustain = quickParams[EnvelopeSustain][v]->read();
     sustain = sustain < 0.f ? 0.f : sustain;
-    tADSRT_setSustain(&envs[v], sustain);
+    tADSRT_setSustain(envs[v], sustain);
     float release = quickParams[EnvelopeRelease][v]->read();
     release = release < 0.f ? 0.f : release;
-    tADSRT_setRelease(&envs[v], release);
+    tADSRT_setRelease(envs[v], release);
     float leak = quickParams[EnvelopeLeak][v]->read();
     leak = leak < 0.f ? 0.f : leak;
-    tADSRT_setLeakFactor(&envs[v], 0.99995f + 0.00005f*(1.f-leak));
+    tADSRT_setLeakFactor(envs[v], 0.99995f + 0.00005f*(1.f-leak));
 }
 
 void Envelope::tick()
@@ -133,23 +133,23 @@ void Envelope::tick()
         float attack = quickParams[EnvelopeAttack][v]->read();
         attack = attack < 0.f ? 0.f : attack;
         attack = processor.scaleADSRTimes(attack);
-        tADSRT_setAttack(&envs[v], attack);
+        tADSRT_setAttack(envs[v], attack);
         float decay = quickParams[EnvelopeDecay][v]->read();
         decay = decay < 0.f ? 0.f : decay;
         decay = processor.scaleADSRTimes(decay);
-        tADSRT_setDecay(&envs[v], decay);
+        tADSRT_setDecay(envs[v], decay);
         float sustain = quickParams[EnvelopeSustain][v]->read();
         sustain = sustain < 0.f ? 0.f : sustain;
-        tADSRT_setSustain(&envs[v], sustain);
+        tADSRT_setSustain(envs[v], sustain);
         float release = quickParams[EnvelopeRelease][v]->read();
         release = release < 0.f ? 0.f : release;
         release = processor.scaleADSRTimes(release);
-        tADSRT_setRelease(&envs[v], release);
+        tADSRT_setRelease(envs[v], release);
         float leak = quickParams[EnvelopeLeak][v]->read();
         leak = leak < 0.f ? 0.f : leak;
-        tADSRT_setLeakFactor(&envs[v], 0.99995f + 0.00005f*(1.f-leak));
+        tADSRT_setLeakFactor(envs[v], 0.99995f + 0.00005f*(1.f-leak));
 #endif
-        float value = tADSRT_tick(&envs[v]);
+        float value = tADSRT_tick(envs[v]);
         
         source[v] = value;
         if (isAmpEnv)
@@ -158,7 +158,7 @@ void Envelope::tick()
                 {
                     if (envs[v]->whichStage == env_idle)
                     {
-                        tSimplePoly_deactivateVoice(&processor.strings[0], (uint8_t) v);
+                        tSimplePoly_deactivateVoice(processor.strings[0], (uint8_t) v);
                         processor.voiceIsSounding[v] = false;
                     }
                 }
@@ -169,14 +169,14 @@ void Envelope::tick()
 void Envelope::noteOn(int voice, float velocity)
 {
     if (useVelocity->getValue() == 0) velocity = 1.f;
-    tADSRT_on(&envs[voice], velocity);
+    tADSRT_on(envs[voice], velocity);
     processor.voiceIsSounding[voice] = true;
 }
 
 void Envelope::noteOff(int voice, float velocity)
 {
     
-    tADSRT_off(&envs[voice]);
+    tADSRT_off(envs[voice]);
 }
 
 void Envelope::setParams()

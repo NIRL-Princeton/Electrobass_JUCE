@@ -350,12 +350,12 @@ isProcessing(true)
     formatManager.registerBasicFormats();   
     keyboardState.addListener(this);
     
-    LEAF_init(&leaf, 44100.0f, dummy_memory, 32, []() {return (float)rand() / RAND_MAX; });
+    LEAF_init(&leaf, 44100.0f, dummy_memory, 3200000, []() {return (float)rand() / RAND_MAX; });
     
     leaf.clearOnAllocation = 1;
     
     tSimplePoly_init(&strings[0], MAX_NUM_VOICES, &leaf);
-    tSimplePoly_setNumVoices(&strings[0], (uint8_t)numVoicesActive);
+    tSimplePoly_setNumVoices(strings[0], (uint8_t)numVoicesActive);
     
     
     LEAF_generate_table_skew_non_sym(skewTableQ, 0.0f, 10.0f, 0.5f, 2048);
@@ -659,7 +659,7 @@ void ElectroAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBloc
     {
         for (auto waveTable : waveTableSet)
         {
-            tWaveTableS_setSampleRate(&waveTable, sampleRate);
+            tWaveTableS_setSampleRate(waveTable, sampleRate);
         }
     }
     
@@ -835,14 +835,14 @@ void ElectroAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
         for (int v = 0; v < numVoicesActive; ++v)
         {
             float pitchBend = transp + globalPitchBend + pitchBendParams[v+1]->tickNoHooksNoSmoothing();
-            float tempNote = (float)tSimplePoly_getPitch(&strings[v*mpe],(uint8_t) (v*impe));
+            float tempNote = (float)tSimplePoly_getPitch(strings[v*mpe],(uint8_t) (v*impe));
             
             
             //added this check because if there is no active voice "getPitch" returns -1
             if (tempNote >= 0.0f)
             {
                 //freeze pitch bend data on voices where a note off has happened and we are in the release phase
-                if (tSimplePoly_isOn(&strings[v*mpe], (uint8_t)(v*impe)))
+                if (tSimplePoly_isOn(strings[v*mpe], (uint8_t)(v*impe)))
                 {
                     tempNote += pitchBend;
                     voicePrevBend[v] = pitchBend;
@@ -909,8 +909,8 @@ void ElectroAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
         noise->tick(samples);
         for (int v = 0; v < numVoicesActive; ++v)
         {
-            samples[0][v] = tHighpass_tick(&dcBlockPreFilt1[v],samples[0][v]) + denormalFix;
-            samples[1][v] = tHighpass_tick(&dcBlockPreFilt2[v],samples[1][v]) + denormalFix;
+            samples[0][v] = tHighpass_tick(dcBlockPreFilt1[v],samples[0][v]) + denormalFix;
+            samples[1][v] = tHighpass_tick(dcBlockPreFilt2[v],samples[1][v]) + denormalFix;
         }
         
         
@@ -951,7 +951,7 @@ void ElectroAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
                 samples[1][v] = 0.0f;
             }
 #endif
-            tOversampler_upsample(&os[v], samples[1][v], oversamplerArray);
+            tOversampler_upsample(os[v], samples[1][v], oversamplerArray);
 #ifdef NAN_CHECK
             if (isnan(oversamplerArray[0]))
             {
@@ -971,7 +971,7 @@ void ElectroAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
             {
                 oversamplerArray[i] = LEAF_clip(-1.0f, oversamplerArray[i], 1.0f);
             }
-            samples[1][v] = tOversampler_downsample(&os[v], oversamplerArray);
+            samples[1][v] = tOversampler_downsample(os[v], oversamplerArray);
 #ifdef NAN_CHECK
             if (isnan(samples[1][v]))
             {
@@ -1011,7 +1011,7 @@ void ElectroAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
         
         
         outputSamples[0] = sampleOutput * mastergain * pedGain * 0.98f; //drop a little bit to avoid touching clipping
-        tHighpass_tick(&dcBlockMaster, outputSamples[0]);
+        tHighpass_tick(dcBlockMaster, outputSamples[0]);
         for (int channel = 0; channel < totalNumOutputChannels; ++channel)
         {
             buffer.setSample(channel, s, LEAF_clip(-1.0f, outputSamples[0], 1.0f));
@@ -1175,7 +1175,7 @@ void ElectroAudioProcessor::noteOn(int channel, int key, float velocity)
     if (!velocity) noteOff(channel, key, velocity);
     else
     {
-        int v = tSimplePoly_noteOn(&strings[i], key, velocity * 127.f);
+        int v = tSimplePoly_noteOn(strings[i], key, velocity * 127.f);
         if (!mpeMode) i = v;
         
         if (v >= 0)
@@ -1201,7 +1201,7 @@ void ElectroAudioProcessor::noteOff(int channel, int key, float velocity)
     int i = mpeMode ? channelToStringMap[channel]-1 : 0;
     if (i < 0) return;
     
-    int v = tSimplePoly_markPendingNoteOff(&strings[i], key);
+    int v = tSimplePoly_markPendingNoteOff(strings[i], key);
     
     if (!mpeMode) i = 0;
     //else i = v;
@@ -1209,11 +1209,11 @@ void ElectroAudioProcessor::noteOff(int channel, int key, float velocity)
     
     
     //If stack_IsNOTEmpty
-    if ((v != -1) && (tStack_getSize(&strings[i]->stack) >= numVoicesActive)) {
+    if ((v != -1) && (tStack_getSize(strings[i]->stack) >= numVoicesActive)) {
         if (strings[0]->voices[v][0] == -2)
         {
             
-                tSimplePoly_deactivateVoice(&strings[0], v);
+                tSimplePoly_deactivateVoice(strings[0], v);
                 voiceIsSounding[v] = true;
         }
         return;
@@ -1299,8 +1299,8 @@ bool ElectroAudioProcessor::stringIsActive(int string)
     if (string == 0) return stringActivity[0] > 0;
     
     int isOn;
-    if (mpeMode) isOn = tSimplePoly_isOn(&strings[string-1], 0);
-    else isOn = tSimplePoly_isOn(&strings[0], string-1);
+    if (mpeMode) isOn = tSimplePoly_isOn(strings[string-1], 0);
+    else isOn = tSimplePoly_isOn(strings[0], string-1);
     
     return isOn + stringActivity[string] > 0;
 }
@@ -1314,7 +1314,7 @@ bool ElectroAudioProcessor::getMPEMode()
 void ElectroAudioProcessor::setMPEMode(bool enabled)
 {
     mpeMode = enabled;
-    tSimplePoly_setNumVoices(&strings[0], mpeMode ? 1 : numVoicesActive);
+    tSimplePoly_setNumVoices(strings[0], mpeMode ? 1 : numVoicesActive);
 }
 
 void ElectroAudioProcessor::setNumVoicesActive(int numVoices)
