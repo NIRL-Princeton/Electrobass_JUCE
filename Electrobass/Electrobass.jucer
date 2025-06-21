@@ -4,9 +4,9 @@
               jucerFormatVersion="1" version="1.0.1" companyName="Snyderphonics"
               companyCopyright="Snyderphonics" companyWebsite="http://snyderphonics.com/"
               pluginCharacteristicsValue="pluginIsSynth,pluginProducesMidiOut,pluginWantsMidiIn"
-              defines="JUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1&#10;BOOST_ALL_NO_LIB=1&#10;"
+              defines="JUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1&#10;BOOST_ALL_NO_LIB=1&#10;LEAF_USE_DYNAMIC_ALLOCATION=1"
               pluginVST3Category="Instrument" pluginFormats="buildAAX,buildAU,buildStandalone,buildVST3"
-              maxBinaryFileSize="20971520" pluginName="Electrosnyth1">
+              maxBinaryFileSize="20971520" pluginName="Electrosnyth1" cppLanguageStandard="latest">
   <MAINGROUP id="zr98AB" name="Electrosynth">
     <GROUP id="{B8EA8B88-4125-0A91-2EA2-1CD3B3374012}" name="Source">
       <FILE id="lzZEsD" name="LockFreeQueue.cpp" compile="1" resource="0"
