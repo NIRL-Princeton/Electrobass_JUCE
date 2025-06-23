@@ -1009,7 +1009,7 @@ void ElectroAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
             pedGain = 0.006721744f + 0.4720157f*volumeSmoothed - 2.542849f*volumeSmoothed*volumeSmoothed + 6.332339f*volumeSmoothed*volumeSmoothed*volumeSmoothed - 3.271672f*volumeSmoothed*volumeSmoothed*volumeSmoothed*volumeSmoothed;
         }
         
-        DBG(pedGain);
+        //DBG(pedGain);
         outputSamples[0] = sampleOutput * mastergain * pedGain * 0.98f; //drop a little bit to avoid touching clipping
         tHighpass_tick(dcBlockMaster, outputSamples[0]);
         for (int channel = 0; channel < totalNumOutputChannels; ++channel)
