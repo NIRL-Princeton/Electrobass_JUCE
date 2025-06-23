@@ -44,7 +44,7 @@ chooser("Select a .wav file to load...", {}, "*.wav")
     hamburger_menu_image = Drawable::createFromImageData(BinaryData::Hamburger_icon_svg_png,
                                                          BinaryData::Hamburger_icon_svg_pngSize);
     hamburger_menu_image->replaceColour(Colours::white,  Colours::gold.withBrightness(0.9f));
-    vts.state.addListener(this);
+    //vts.state.addListener(this);
     LookAndFeel::setDefaultLookAndFeel(ElectroLookAndFeel::getInstance());
     tabs.getTabbedButtonBar().setLookAndFeel(&laf);
     meters.setChannelFormat(juce::AudioChannelSet::stereo());
@@ -261,9 +261,9 @@ chooser("Select a .wav file to load...", {}, "*.wav")
    
     
     
-    //mpeToggle.setButtonText("MPE");
-//    mpeToggle.addListener(this);
-//    tab1.addAndMakeVisible(mpeToggle);
+    mpeToggle.setButtonText("MPE");
+    mpeToggle.addListener(this);
+    tab1.addAndMakeVisible(mpeToggle);
     
     muteToggle.setButtonText("Mute");
     muteToggle.addListener(this);
@@ -1037,7 +1037,7 @@ void ElectroAudioProcessorEditor::resized()
     //    keyboard.setBoundsRelative(0.f, 0.86f, 1.0f, 0.14f);
     //    keyboard.setKeyWidth(width / 52.0f);
     
-    OSCILLOSCOPE.setBoundsRelative(0.65,0.87,0.35, 0.13 );
+   
     
     OSCILLOSCOPE.setBoundsRelative(0.85,0.87,0.15, 0.13 );
     //meters.setBounds(540*s-1, outputModule->getBottom()-1, 360*s+2, 114*s);
@@ -1822,8 +1822,5 @@ void ElectroAudioProcessorEditor::updateRandomValueLabel(float value)
     randomValueLabel.setText(String(value, 3), dontSendNotification);
 }
 
-void   ElectroAudioProcessorEditor::valueTreePropertyChanged (ValueTree &treeWhosePropertyHasChanged, const Identifier &property)
-{
-   
-}
+
 

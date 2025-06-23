@@ -64,8 +64,8 @@ class ElectroAudioProcessorEditor : public AudioProcessorEditor,
                                public KeyListener,
                                public Timer,
                                public DragAndDropContainer,
-                               public sd::SoundMeter::MetersComponent::FadersChangeListener,
-                               public ValueTree::Listener
+                               public sd::SoundMeter::MetersComponent::FadersChangeListener
+                              // public ValueTree::Listener
                             
                               
 
@@ -89,7 +89,7 @@ public:
     Slider masterSlider;
     ElectroAudioProcessor& processor;
     AudioProcessorValueTreeState& vts;
-    void  valueTreePropertyChanged (ValueTree &treeWhosePropertyHasChanged, const Identifier &property) override;
+
     void updateMPEToggle(bool state);
     void updatePedalVolumeControl(bool state);
     void updateNumVoicesSlider(int numVoices);
