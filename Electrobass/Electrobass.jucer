@@ -112,7 +112,7 @@
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="GruRzA" bigIcon="GruRzA"
                appSandboxOptions="com.apple.security.device.usb,com.apple.security.files.user-selected.read-only,com.apple.security.files.user-selected.read-write"
                applicationCategory="public.app-category.music" extraLinkerFlags="-Wl, "
-               extraDefs="SAFE_FILTER=1" aaxFolder="../../aax-sdk-2-6-1">
+               extraDefs="SAFE_FILTER=1" aaxFolder="../../aax-sdk-2-8-1">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="Electrosynth" recommendedWarnings="LLVM"
                        defines="SAFE_FILTER" macOSDeploymentTarget="12" osxCompatibility="12 SDK"/>
