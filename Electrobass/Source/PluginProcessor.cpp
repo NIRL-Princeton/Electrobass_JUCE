@@ -812,7 +812,8 @@ void ElectroAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
         //            pitchBends[i] = pitchBendParams[i]->tickNoHooksNoSmoothing();
         //        }
         
-        float globalPitchBend = pitchBendParams[0]->tickNoHooksNoSmoothing();
+        float globalPitchBend = pitchBendParams[0]->tickNoHooksNoSmoothing()*impe;
+        
         
         float samples[2][MAX_NUM_VOICES];
         float outputSamples[2];

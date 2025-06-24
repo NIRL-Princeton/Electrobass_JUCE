@@ -66,6 +66,7 @@ Effect::Effect(const String& n, ElectroAudioProcessor& p,
         tLadderFilter_setSampleRate(Ladderfilter[i], getProcessor()->leaf.sampleRate * OVERSAMPLE);
     }
     LEAF_generate_table_skew_non_sym(resTable, 0.01f, 10.0f, 0.5f, SCALE_TABLE_SIZE);
+    gainSmoother.setTargetValue(1.f);
 }
 
 Effect::~Effect()
@@ -115,6 +116,18 @@ void Effect::frame()
     sampleInBlock = 0;
     
     _tick = typeToTick(FXType(int(*afpFXType)));
+    if (prev_fx_type != FXType(int(*afpFXType)))
+    {
+        gainSmoother.setCurrentAndTargetValue(0.0f);
+        
+        DBG("switch");
+    }else if(gainSmoother.getCurrentValue()==0.0f)
+    {
+        gainSmoother.setTargetValue(1.0f);
+    }
+
+        
+    prev_fx_type = FXType(int(*afpFXType));
 }
 
 Effect::EffectTick Effect::typeToTick(FXType type)
@@ -304,12 +317,16 @@ void Effect::oversample_tick(float* samples, int v)
     float param5 = quickParams[Param5][v]->read();
     float mix = quickParams[Mix][v]->read();
     float postGain = quickParams[PostGain][v]->read();
+    gain = gainSmoother.getNextValue();
+    //DBG(gain);
     for(int i = 0; i < OVERSAMPLE; i++)
     {
         float output = (this->*_tick)((samples[i]), param1, param2, param3, param4, param5, v);
         samples[i] = ((1.0f - mix) * (samples[i])) + (mix * output);
-        samples[i] *= fasterdbtoa((postGain * 24.0f) - 12.0f);
+        samples[i] *= fasterdbtoa((postGain * 24.0f) - 12.0f) * gain;
+        
     }
+    
     sampleInBlock++;
 }
 

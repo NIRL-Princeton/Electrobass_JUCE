@@ -23,6 +23,8 @@ public:
     void prepareToPlay (double sampleRate, int samplesPerBlock)
     {
         AudioComponent::prepareToPlay(sampleRate, samplesPerBlock);
+        gainSmoother.reset(sampleRate,.40);
+        gainSmoother.setTargetValue(1.f);
     }
     
     ElectroAudioProcessor* getProcessor() {return &processor;}    float tick(float sample, float param1, float param2, float param3, float param4, float param5, int v);
@@ -77,6 +79,7 @@ private:
     float delayFB[MAX_NUM_VOICES];
     tFeedbackLeveler feedbackControl[MAX_NUM_VOICES];
     std::atomic<float>* afpFXType;
+    FXType prev_fx_type;
     tDiodeFilter diodeFilters[MAX_NUM_VOICES];
     tVZFilterBell VZfilterPeak[MAX_NUM_VOICES];
     tVZFilterLS VZfilterLS[MAX_NUM_VOICES];
@@ -91,4 +94,6 @@ private:
     tSVF highpass[MAX_NUM_VOICES];
     tSVF bandpass[MAX_NUM_VOICES];
     tLadderFilter Ladderfilter[MAX_NUM_VOICES];
+    juce::LinearSmoothedValue<float> gainSmoother;
+    float gain =0.f;
 };
