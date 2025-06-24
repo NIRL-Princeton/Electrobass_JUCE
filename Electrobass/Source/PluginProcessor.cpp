@@ -1002,7 +1002,7 @@ void ElectroAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
         float pedGain = 1.f;
         
         // this is to clip the gain settings so all the way down on the pedal isn't actually
-        // off, it let's a little signal through. Would be more efficient to fix the table to
+        // off, it lets a little signal through. Would be more efficient to fix the table to
         // span a better range.
         if(pedalControlsMaster)
         {
@@ -1010,7 +1010,7 @@ void ElectroAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
             pedGain = 0.006721744f + 0.4720157f*volumeSmoothed - 2.542849f*volumeSmoothed*volumeSmoothed + 6.332339f*volumeSmoothed*volumeSmoothed*volumeSmoothed - 3.271672f*volumeSmoothed*volumeSmoothed*volumeSmoothed*volumeSmoothed;
         }
         
-        
+        //DBG(pedGain);
         outputSamples[0] = sampleOutput * mastergain * pedGain * 0.98f; //drop a little bit to avoid touching clipping
         tHighpass_tick(dcBlockMaster, outputSamples[0]);
         for (int channel = 0; channel < totalNumOutputChannels; ++channel)
