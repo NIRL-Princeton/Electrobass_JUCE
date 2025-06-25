@@ -31,7 +31,7 @@ set(PRODUCT_NAME "ElectroSynth")
 set(COMPANY_NAME "Snyderphonics")
 
 # Change me! Used for the MacOS bundle identifier (and signing)
-set(BUNDLE_ID "com.snyderphonics.electrobass")
+set(BUNDLE_ID "com.snyderphonics.electorsynth")
 
 # Change me! Set the plugin formats you want built
 # Valid choices: AAX Unity VST VST3 AU AUv3 Standalone
