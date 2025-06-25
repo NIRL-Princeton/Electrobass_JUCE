@@ -170,11 +170,6 @@ target_link_libraries("${PROJECT_NAME}" PRIVATE SharedCode)
 # IPP support, comment out to disable
 include(PamplejuceIPP)
 
-# Everything related to the tests target
-include(Tests)
-
-# A separate target for Benchmarks (keeps the Tests target fast)
-include(Benchmarks)
 
 # Output some config for CI (like our PRODUCT_NAME)
 include(GitHubENV)
