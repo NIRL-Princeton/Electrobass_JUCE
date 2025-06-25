@@ -162,6 +162,7 @@ sound_meter)
 target_include_directories(SharedCode INTERFACE modules/tuning-library/include)
 target_include_directories(SharedCode INTERFACE modules/LEAF/leaf)
 target_include_directories(SharedCode INTERFACE modules/sound_meter)
+target_include_directories(SharedCode INTERFACE ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}_artefacts)
 
 # Link the JUCE plugin targets our SharedCode target
 target_link_libraries("${PROJECT_NAME}" PRIVATE SharedCode)
