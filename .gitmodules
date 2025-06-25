@@ -1,0 +1,16 @@
+[submodule "Electrobass/Source/Electro_backend"]
+	path = Electrobass/Source/Electro_backend
+	url = git@github.com:davispolito/Electro_backend.git
+	branch = main
+[submodule "JUCE"]
+	path = JUCE
+	url = git@github.com:juce-framework/JUCE.git
+[submodule "cmake"]
+	path = cmake
+	url = git@github.com:sudara/cmake-includes.git
+[submodule "modules/LEAF"]
+	path = modules/LEAF
+	url = git@github.com:spiricom/LEAF.git
+[submodule "modules/sound_meter"]
+	path = modules/sound_meter
+  url = git@github.com:davispolito/sound_meter.git
