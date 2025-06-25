@@ -1,3 +1,5 @@
 .DS_Store
 Electrobass/Builds
 Electrobass/JuceLibraryCode
+cmake-build-*
+.idea
