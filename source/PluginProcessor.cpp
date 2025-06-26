@@ -1317,6 +1317,11 @@ void ElectroAudioProcessor::setMPEMode(bool enabled)
 {
     mpeMode = enabled;
     tSimplePoly_setNumVoices(strings[0], mpeMode ? 1 : numVoicesActive);
+    for (int i = 0; i < MAX_NUM_VOICES; ++i)
+    {
+        tSimplePoly_allNotesOff(strings[i]);
+        for (auto e :envs) e->noteOff(i, 0);
+    }
 }
 
 void ElectroAudioProcessor::setNumVoicesActive(int numVoices)

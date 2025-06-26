@@ -1700,6 +1700,7 @@ void ElectroAudioProcessorEditor::updateMPEToggle(bool state)
     {
         pitchBendSliders[i]->setAlpha(state ? 1.f : 0.7f);
         pitchBendSliders[i]->setEnabled(state);
+        pitchBendSliders[i]->setValue(0.f);
     }
     for (int i = 0; i < stringChannelEntries.size(); ++i)
     {
@@ -1787,7 +1788,13 @@ void ElectroAudioProcessorEditor::updateNumVoicesSlider(int numVoices)
     //processor.numVoicesActive = numVoices;
     processor.setNumVoicesActive(numVoices);
     numVoicesSlider.setValue(numVoices, dontSendNotification);
-    
+    for (int i = 0; i < MAX_NUM_VOICES; ++i)
+    {
+        tSimplePoly_allNotesOff(processor.strings[i]);
+        for (auto e : processor.envs) e->noteOff(i, 0);
+    }
+
+
     for (int v = 0; v < processor.numVoicesActive; v++)
     {
         for (int i = 0; i < NUM_OSCS; i++)
