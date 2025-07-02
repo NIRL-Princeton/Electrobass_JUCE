@@ -148,16 +148,17 @@ jobs:
           dev-id-app-cert: ${{ secrets.DEV_ID_APP_CERT }}
           dev-id-app-password: ${{ secrets.DEV_ID_APP_PASSWORD }}
           dev-id-installer-cert: ${{ secrets.DEV_ID_INSTALLER_CERT }}
-          dev-id-installer-password: ${{ secrets.DEV_ID_INSTALLER_PASSWORD }}
+          dev-id-installer-password: ${{ secrets.DEV_ID_INSTALLER_PASS }}
 
       - name: Codesign (macOS)
         if: ${{ matrix.name == 'macOS' }}
         timeout-minutes: 5
         run: |
           # Each plugin must be code signed
-          codesign --force -s "${{ secrets.DEV_ID_APP_CERT}}" -v "${{ env.VST3_PATH }}" --deep --strict --options=runtime --timestamp
-          codesign --force -s "${{ secrets.DEV_ID_APP_CERT}}" -v "${{ env.AU_PATH }}" --deep --strict --options=runtime --timestamp
-          codesign --force -s "${{ secrets.DEV_ID_APP_CERT}}" -v "${{ env.STANDALONE_PATH }}" --deep --strict --options=runtime --timestamp
+          
+          codesign --force -s "${{ secrets.DEVELOPER_ID_APPLICATION}}" -v "${{ env.VST3_PATH }}" --deep --strict --options=runtime --timestamp
+          codesign --force -s "${{ secrets.DEVELOPER_ID_APPLICATION}}" -v "${{ env.AU_PATH }}" --deep --strict --options=runtime --timestamp
+          codesign --force -s "$${{ secrets.DEVELOPER_ID_APPLICATION}}" -v "${{ env.STANDALONE_PATH }}" --deep --strict --options=runtime --timestamp
 
       - name: Add Custom Icons (macOS)
         if: ${{ matrix.name == 'macOS' }}
