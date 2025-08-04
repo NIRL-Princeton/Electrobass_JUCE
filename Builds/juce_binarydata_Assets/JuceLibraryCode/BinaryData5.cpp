@@ -1,0 +1,92 @@
+/* ==================================== JUCER_BINARY_RESOURCE ====================================
+
+   This is an auto-generated file: Any edits you make may be overwritten!
+
+*/
+
+#include <cstring>
+
+namespace BinaryData
+{
+
+//================== closeicon.svg ==================
+static const unsigned char temp_binary_data_4[] =
+"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
+"<svg\n"
+"   xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n"
+"   xmlns:cc=\"http://creativecommons.org/ns#\"\n"
+"   xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n"
+"   xmlns:svg=\"http://www.w3.org/2000/svg\"\n"
+"   xmlns=\"http://www.w3.org/2000/svg\"\n"
+"   xmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\"\n"
+"   xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\"\n"
+"   width=\"512\"\n"
+"   height=\"512\"\n"
+"   version=\"1.1\"\n"
+"   id=\"svg116\"\n"
+"   sodipodi:docname=\"closeicon.svg\"\n"
+"   inkscape:version=\"1.0.2 (e86c8708, 2021-01-15)\">\n"
+"  <sodipodi:namedview\n"
+"     pagecolor=\"#ffffff\"\n"
+"     bordercolor=\"#666666\"\n"
+"     borderopacity=\"1\"\n"
+"     objecttolerance=\"10\"\n"
+"     gridtolerance=\"10\"\n"
+"     guidetolerance=\"10\"\n"
+"     inkscape:pageopacity=\"0\"\n"
+"     inkscape:pageshadow=\"2\"\n"
+"     inkscape:window-width=\"1389\"\n"
+"     inkscape:window-height=\"951\"\n"
+"     id=\"namedview28\"\n"
+"     showgrid=\"false\"\n"
+"     inkscape:zoom=\"1.4355469\"\n"
+"     inkscape:cx=\"256\"\n"
+"     inkscape:cy=\"256\"\n"
+"     inkscape:window-x=\"0\"\n"
+"     inkscape:window-y=\"23\"\n"
+"     inkscape:window-maximized=\"0\"\n"
+"     inkscape:current-layer=\"svg116\" />\n"
+"  <metadata\n"
+"     id=\"metadata122\">\n"
+"    <rdf:RDF>\n"
+"      <cc:Work\n"
+"         rdf:about=\"\">\n"
+"        <dc:format>image/svg+xml</dc:format>\n"
+"        <dc:type\n"
+"           rdf:resource=\"http://purl.org/dc/dcmitype/StillImage\" />\n"
+"        <dc:title></dc:title>\n"
+"      </cc:Work>\n"
+"    </rdf:RDF>\n"
+"  </metadata>\n"
+"  <defs\n"
+"     id=\"defs120\" />\n"
+"  <g\n"
+"     id=\"g114\"\n"
+"     style=\"stroke:#ffd700;stroke-opacity:1\">\n"
+"    <title\n"
+"       id=\"title99\">Layer 1</title>\n"
+"    <path\n"
+"       id=\"svg_1\"\n"
+"       style=\"fill:none;stroke:#ffd700;stroke-width:48;stroke-opacity:1\"\n"
+"       d=\"M 17.559,494.441 494.44067,17.559334\"\n"
+"       sodipodi:nodetypes=\"cc\" />\n"
+"    <path\n"
+"       id=\"svg_4\"\n"
+"       style=\"fill:none;stroke:#ffd700;stroke-width:48;stroke-opacity:1\"\n"
+"       d=\"M 17.559334,17.559334 494.441,494.441\"\n"
+"       sodipodi:nodetypes=\"cc\" />\n"
+"    <ellipse\n"
+"       fill=\"none\"\n"
+"       stroke=\"#DDDDDD\"\n"
+"       stroke-width=\"48\"\n"
+"       opacity=\"undefined\"\n"
+"       cx=\"256\"\n"
+"       cy=\"256\"\n"
+"       id=\"svg_16\"\n"
+"       ry=\"96\"\n"
+"       style=\"stroke:#ffd700;stroke-opacity:1\" />\n"
+"  </g>\n"
+"</svg>\n";
+
+const char* closeicon_svg = (const char*) temp_binary_data_4;
+}
