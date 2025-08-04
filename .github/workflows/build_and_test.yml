@@ -35,22 +35,22 @@ jobs:
       fail-fast: false # show all errors for each platform (vs. cancel jobs on error)
       matrix:
         include:
-         # - name: Linux
-         #   os: ubuntu-22.04
-         #   pluginval-binary: ./pluginval
-        #    extra-flags: -G Ninja
+          - name: Linux
+            os: ubuntu-22.04
+            pluginval-binary: ./pluginval
+            extra-flags: -G Ninja
           - name: macOS
             os: macos-14
             pluginval-binary: pluginval.app/Contents/MacOS/pluginval
             extra-flags: -G Ninja -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64"
-        #  - name: Windows
-        #    os: windows-latest
-        #    pluginval-binary: ./pluginval.exe
+          - name: Windows
+            os: windows-latest
+            pluginval-binary: ./pluginval.exe
 
     steps:
       # Setup MSVC toolchain and developer command prompt (Windows)
-#      - uses: ilammy/msvc-dev-cmd@v1
-#
+      - uses: ilammy/msvc-dev-cmd@v1
+
       # Use clang on Linux so we don't introduce a 3rd compiler (Windows and macOS use MSVC and Clang)
       - name: Set up Clang
         if: runner.os == 'Linux'
