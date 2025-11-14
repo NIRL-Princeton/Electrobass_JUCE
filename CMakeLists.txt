@@ -67,17 +67,19 @@ juce_add_plugin("${PROJECT_NAME}"
 
     # On MacOS, plugin is copied to /Users/yourname/Library/Audio/Plug-Ins/
     COPY_PLUGIN_AFTER_BUILD TRUE
-
+    NEEDS_MIDI_INPUT TRUE
+    IS_SYNTH TRUE
     # Change me!
     # A four-character plugin id
     # First character MUST be uppercase for AU formats
-    PLUGIN_MANUFACTURER_CODE Snyd
-        IS_SYNTH TRUE
-        NEEDS_MIDI_INPUT TRUE
+
+    PLUGIN_MANUFACTURER_CODE Jeff
+
     # Change me!
     # A unique four-character plugin id
     # Note: this must have at least one upper-case character
-    PLUGIN_CODE SNY1
+    PLUGIN_CODE E079
+
     FORMATS "${FORMATS}"
 
     # The name of your final executable

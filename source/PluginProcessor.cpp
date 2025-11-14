@@ -1317,6 +1317,7 @@ void ElectroAudioProcessor::setMPEMode(bool enabled)
 {
     mpeMode = enabled;
     tSimplePoly_setNumVoices(strings[0], mpeMode ? 1 : numVoicesActive);
+    //this is definitely not thread safe
     for (int i = 0; i < MAX_NUM_VOICES; ++i)
     {
         tSimplePoly_allNotesOff(strings[i]);
