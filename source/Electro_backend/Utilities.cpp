@@ -46,14 +46,14 @@ float SmoothedParameter::tick()
     }
     smoothed.setTargetValue(target);
     value = smoothed.getNextValue();
-    value = target;
+    //value = target;
     for (int i = 0; i < numNonSmoothedHooks; ++i)
     {
         value += hooks[nonSmoothedHooks[i]].getValue();
     }
     if ((numSmoothedHooks == 0) && (numNonSmoothedHooks == 0))
     {
-        if ((value >= target - 0.0001f) && (value <= target + 0.0001f)) //changed this because equality check on floats isn't reliable
+        if ((value >= target - 0.00001f) && (value <= target + 0.00001f)) //changed this because equality check on floats isn't reliable
         {
             removeMe = true;
         }
@@ -212,7 +212,7 @@ float SmoothedParameter::getEnd()
 
 void SmoothedParameter::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
-    smoothed.reset(sampleRate, 0.006);
+    smoothed.reset(sampleRate, 0.01);
 }
 
 //==============================================================================
