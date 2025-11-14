@@ -156,6 +156,24 @@ void MappingTarget::mouseDrag(const MouseEvent& event)
     }
 }
 
+void MappingTarget::mouseEnter(const MouseEvent& event)
+{
+    if (sliderEnabled)
+    {
+        setMouseCursor(juce::MouseCursor::LeftRightResizeCursor);
+        Slider::mouseEnter(event);
+    }
+}
+
+void MappingTarget::mouseExit(const MouseEvent& event)
+{
+    if (sliderEnabled)
+    {
+        setMouseCursor(juce::MouseCursor::NormalCursor);
+        Slider::mouseExit(event);
+    }
+}
+
 void MappingTarget::update(bool directChange, bool sendListenerNotif)
 {
     ElectroDial* dial = dynamic_cast<ElectroDial*>(getParentComponent());

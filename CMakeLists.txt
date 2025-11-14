@@ -25,13 +25,13 @@ set(PROJECT_NAME "Electrosnyth")
 #   set(PROJECT_NAME "MyPlugin_v${MAJOR_VERSION}")
 # Doing so enables major versions to show up in IDEs and DAWs as separate plugins
 # allowing you to change parameters and behavior without breaking existing user projects
-set(PRODUCT_NAME "ElectroSynth")
+set(PRODUCT_NAME "ElectroSnythhw")
 
 # Change me! Used for the MacOS bundle name and Installers
 set(COMPANY_NAME "Snyderphonics")
 
 # Change me! Used for the MacOS bundle identifier (and signing)
-set(BUNDLE_ID "com.snyderphonics.electorsynth")
+set(BUNDLE_ID "com.snyderphonics.electrosnythh")
 
 # Change me! Set the plugin formats you want built
 # Valid choices: AAX Unity VST VST3 AU AUv3 Standalone
@@ -71,12 +71,13 @@ juce_add_plugin("${PROJECT_NAME}"
     # Change me!
     # A four-character plugin id
     # First character MUST be uppercase for AU formats
-    PLUGIN_MANUFACTURER_CODE Pamp
-
+    PLUGIN_MANUFACTURER_CODE Snyd
+        IS_SYNTH TRUE
+        NEEDS_MIDI_INPUT TRUE
     # Change me!
     # A unique four-character plugin id
     # Note: this must have at least one upper-case character
-    PLUGIN_CODE P001
+    PLUGIN_CODE SNY1
     FORMATS "${FORMATS}"
 
     # The name of your final executable
@@ -122,6 +123,7 @@ target_compile_definitions(SharedCode
     JUCE_USE_CURL=0     # If you set this to 1, add `NEEDS_CURL TRUE` to the `juce_add_plugin` call
     JUCE_VST3_CAN_REPLACE_VST2=0
 
+
     # Uncomment if you are paying for a an Indie/Pro license or releasing under GPLv3
     # JUCE_DISPLAY_SPLASH_SCREEN=0
 
@@ -130,7 +132,7 @@ target_compile_definitions(SharedCode
     VERSION="${CURRENT_VERSION}"
 
     # JucePlugin_Name is for some reason doesn't use the nicer PRODUCT_NAME
-    PRODUCT_NAME_WITHOUT_VERSION="Electrosynth"
+    PRODUCT_NAME_WITHOUT_VERSION="Electrosynthhht"
 )
 target_compile_options(SharedCode INTERFACE -w)
 target_compile_options(SharedCode INTERFACE -Wno-unused-parameter)

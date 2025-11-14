@@ -81,7 +81,8 @@ public:
     
     void mouseDown(const MouseEvent& event) override;
     void mouseDrag(const MouseEvent& event) override;
-    
+    void mouseEnter(const MouseEvent& event) override;
+    void mouseExit(const MouseEvent& event) override;
     void update(bool directChange, bool sendListenerNotif);
 
     void setText(String s);
